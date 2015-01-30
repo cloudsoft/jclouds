@@ -33,7 +33,7 @@ import com.google.common.annotations.VisibleForTesting;
 
 public class JcloudsVersion {
     @VisibleForTesting
-    static final String VERSION_RESOURCE_FILE = "META-INF/maven/org.apache.jclouds/jclouds-core/pom.properties";
+    static final String VERSION_RESOURCE_FILE = "META-INF/maven/io.cloudsoft.jclouds/jclouds-core/pom.properties";
     private static final String VERSION_PROPERTY_NAME = "version";
 
     /*
@@ -41,8 +41,9 @@ public class JcloudsVersion {
      * see http://semver.org.
      */
     private static final Pattern SEMANTIC_VERSION_PATTERN =
-        Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(?:-(alpha|beta|rc)\\.(\\d+)|-SNAPSHOT)?");
+        Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(?:-(alpha|beta|rc|alpha-cloudsoft)\\.(\\d+)|-SNAPSHOT)?");
     private static final String ALPHA_VERSION_IDENTIFIER = "alpha";
+    private static final String CLOUDSOFT_VERSION_IDENTIFIER = "alpha-cloudsoft";
     private static final String BETA_VERSION_IDENTIFIER = "beta";
 
     private static final JcloudsVersion INSTANCE = new JcloudsVersion();
@@ -81,7 +82,7 @@ public class JcloudsVersion {
     JcloudsVersion(ClassLoader resourceLoader) {
         this(readVersionPropertyFromClasspath(resourceLoader));
     }
-
+    
     private static String readVersionPropertyFromClasspath(ClassLoader resourceLoader) {
         Properties versionProperties = new Properties();
         InputStream is = checkNotNull(resourceLoader.getResourceAsStream(VERSION_RESOURCE_FILE), VERSION_RESOURCE_FILE);
@@ -110,6 +111,13 @@ public class JcloudsVersion {
         if (alphaOrBetaOrReleaseCandidateVersionIfPresent != null) {
             Integer alphaOrBetaOrReleaseCandidateVersion = Integer.valueOf(versionMatcher.group(5));
             if (alphaOrBetaOrReleaseCandidateVersionIfPresent.equals(ALPHA_VERSION_IDENTIFIER)) {
+                alpha = true;
+                alphaVersion = alphaOrBetaOrReleaseCandidateVersion;
+                beta = false;
+                betaVersion = null;
+                releaseCandidate = false;
+                releaseCandidateVersion = null;
+            } else if (alphaOrBetaOrReleaseCandidateVersionIfPresent.equals(CLOUDSOFT_VERSION_IDENTIFIER)) {
                 alpha = true;
                 alphaVersion = alphaOrBetaOrReleaseCandidateVersion;
                 beta = false;
