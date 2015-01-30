@@ -41,8 +41,9 @@ public class JcloudsVersion {
      * see http://semver.org.
      */
     private static final Pattern SEMANTIC_VERSION_PATTERN =
-        Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(?:-(alpha|beta|rc)\\.(\\d+)|-SNAPSHOT)?");
+        Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(?:-(alpha|beta|rc|alpha-cloudsoft)\\.(\\d+)|-SNAPSHOT)?");
     private static final String ALPHA_VERSION_IDENTIFIER = "alpha";
+    private static final String CLOUDSOFT_VERSION_IDENTIFIER = "alpha-cloudsoft";
     private static final String BETA_VERSION_IDENTIFIER = "beta";
 
     private static final JcloudsVersion INSTANCE = new JcloudsVersion();
@@ -98,7 +99,7 @@ public class JcloudsVersion {
     @VisibleForTesting
     JcloudsVersion(String version) {
         Matcher versionMatcher = SEMANTIC_VERSION_PATTERN.matcher(version);
-        checkArgument(versionMatcher.matches(), "Version '%s' did not match expected pattern '%s'", 
+        checkArgument(versionMatcher.matches(), "Version '%s' did not match expected pattern '%s'",
                 version, SEMANTIC_VERSION_PATTERN);
         this.version = version;
         // a match will produce three or five matching groups (alpha/beta/release candidate identifier and version optional)
@@ -110,6 +111,13 @@ public class JcloudsVersion {
         if (alphaOrBetaOrReleaseCandidateVersionIfPresent != null) {
             Integer alphaOrBetaOrReleaseCandidateVersion = Integer.valueOf(versionMatcher.group(5));
             if (alphaOrBetaOrReleaseCandidateVersionIfPresent.equals(ALPHA_VERSION_IDENTIFIER)) {
+                alpha = true;
+                alphaVersion = alphaOrBetaOrReleaseCandidateVersion;
+                beta = false;
+                betaVersion = null;
+                releaseCandidate = false;
+                releaseCandidateVersion = null;
+            } else if (alphaOrBetaOrReleaseCandidateVersionIfPresent.equals(CLOUDSOFT_VERSION_IDENTIFIER)) {
                 alpha = true;
                 alphaVersion = alphaOrBetaOrReleaseCandidateVersion;
                 beta = false;
