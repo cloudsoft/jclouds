@@ -73,7 +73,7 @@ public class CleanupServer implements Function<String, Boolean> {
             logger.warn(e, "<< error removing and deallocating ip from node(%s): %s", id, e.getMessage());
          }
       }
-      if (server.getMetadata().get("jclouds_tags").contains(JCLOUDS_KP)) {
+      if (containsMetadata(server, JCLOUDS_KP)) {
         if (novaApi.getKeyPairApi(regionAndId.getRegion()).isPresent()) {
            RegionAndName regionAndName = RegionAndName.fromRegionAndName(regionAndId.getRegion(), server.getKeyName());
            logger.debug(">> deleting keypair(%s)", regionAndName);
@@ -86,7 +86,7 @@ public class CleanupServer implements Function<String, Boolean> {
 
       boolean serverDeleted = novaApi.getServerApi(regionAndId.getRegion()).delete(regionAndId.getId());
 
-      if (server.getMetadata().get("jclouds_tags").contains(JCLOUDS_SG)) {
+      if (containsMetadata(server, JCLOUDS_SG)) {
          for (final String securityGroupName : server.getSecurityGroupNames()) {
             for (SecurityGroup securityGroup : novaApi.getSecurityGroupApi(regionAndId.getRegion()).get().list().toList()) {
                if (securityGroup.getName().equalsIgnoreCase(securityGroupName)) {
@@ -103,5 +103,11 @@ public class CleanupServer implements Function<String, Boolean> {
          }
       }
       return serverDeleted;
+   }
+
+   private boolean containsMetadata(ServerWithSecurityGroups server, String key) {
+      if (server == null || server.getMetadata() == null || server.getMetadata().get("jclouds_tags") == null)
+         return false;
+      return server.getMetadata().get("jclouds_tags").contains(key);
    }
 }
