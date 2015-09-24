@@ -44,6 +44,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.cache.LoadingCache;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -81,14 +82,16 @@ public class AllocateAndAddFloatingIpToNode implements
 
       Optional<FloatingIP> ip = allocateFloatingIPForNode(floatingIpApi, poolNames, node.getId());
       if (!ip.isPresent()) {
-         throw new InsufficientResourcesException("Failed to allocate a FloatingIP for node(" + node.getId() + ")");
+        RegionAndId regionAndId = RegionAndId.fromSlashEncoded(node.getId());
+        novaApi.getServerApi(regionAndId.getRegion()).delete(regionAndId.getId());
+        throw new InsufficientResourcesException("Failed to allocate a FloatingIP for node(" + node.getId() + ")");
       }
       logger.debug(">> adding floatingIp(%s) to node(%s)", ip.get().getIp(), node.getId());
 
       floatingIpApi.addToServer(ip.get().getIp(), node.getProviderId());
 
       input.get().getNodeMetadata().set(NodeMetadataBuilder.fromNodeMetadata(node).publicAddresses(ImmutableSet.of(ip.get().getIp())).build());
-      floatingIpCache.invalidate(RegionAndId.fromSlashEncoded(node.getId()));
+      floatingIpCache.asMap().putIfAbsent(RegionAndId.fromSlashEncoded(node.getId()), ImmutableList.of(ip.get()));
       return input.get().getNodeMetadata();
    }
 
@@ -112,7 +115,7 @@ public class AllocateAndAddFloatingIpToNode implements
                ip = floatingIpApi.allocateFromPool(poolName);
                if (ip != null)
                   return Optional.of(ip);
-            } catch (InsufficientResourcesException ire){
+            } catch (InsufficientResourcesException ire) {
                logger.trace("<< [%s] failed to allocate floating IP from pool %s for node(%s)", ire.getMessage(), poolName, nodeID);
             }
          }
@@ -140,6 +143,9 @@ public class AllocateAndAddFloatingIpToNode implements
 
       }));
       // try to prevent multiple parallel launches from choosing the same ip.
+      if (unassignedIps.isEmpty()) {
+         return Optional.absent();
+      }
       Collections.shuffle(unassignedIps);
       ip = Iterables.getLast(unassignedIps);
       return Optional.fromNullable(ip);
