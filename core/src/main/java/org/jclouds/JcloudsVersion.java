@@ -33,15 +33,14 @@ import com.google.common.annotations.VisibleForTesting;
 
 public class JcloudsVersion {
     @VisibleForTesting
-    static final String VERSION_RESOURCE_FILE = "META-INF/maven/org.apache.jclouds/jclouds-core/pom.properties";
+    static final String VERSION_RESOURCE_FILE = "META-INF/maven/io.cloudsoft.jclouds/jclouds-core/pom.properties";
     private static final String VERSION_PROPERTY_NAME = "version";
 
     /*
      * x.y.z or x.y.z-alpha.n or x.y.z-beta.n or x.y.z-rc.n or x.y.z-SNAPSHOT -
      * see http://semver.org.
      */
-    private static final Pattern SEMANTIC_VERSION_PATTERN =
-        Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(?:-(alpha|beta|rc)\\.(\\d+)|-SNAPSHOT)?");
+    private static final Pattern SEMANTIC_VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(?:-(alpha|beta|rc|ea-cloudsoft)\\.(\\d+)|-SNAPSHOT)?");
     private static final String ALPHA_VERSION_IDENTIFIER = "alpha";
     private static final String BETA_VERSION_IDENTIFIER = "beta";
 
@@ -98,7 +97,7 @@ public class JcloudsVersion {
     @VisibleForTesting
     JcloudsVersion(String version) {
         Matcher versionMatcher = SEMANTIC_VERSION_PATTERN.matcher(version);
-        checkArgument(versionMatcher.matches(), "Version '%s' did not match expected pattern '%s'", 
+        checkArgument(versionMatcher.matches(), "Version '%s' did not match expected pattern '%s'",
                 version, SEMANTIC_VERSION_PATTERN);
         this.version = version;
         // a match will produce three or five matching groups (alpha/beta/release candidate identifier and version optional)
