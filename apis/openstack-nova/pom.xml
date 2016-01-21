@@ -22,12 +22,12 @@
   <parent>
     <groupId>org.apache.jclouds</groupId>
     <artifactId>jclouds-project</artifactId>
-    <version>1.9.1</version>
+    <version>1.9.2</version>
     <relativePath>../../project/pom.xml</relativePath>
   </parent>
   <groupId>org.apache.jclouds.api</groupId>
   <artifactId>openstack-nova</artifactId>
-  <version>1.9.1-20150924</version>
+  <version>1.9.2-cloudsoft-20160121</version>
   <name>Apache jclouds :: OpenStack :: Nova API</name>
   <description>jclouds components to access an implementation of OpenStack Nova</description>
   <packaging>bundle</packaging>
@@ -165,7 +165,7 @@
           <dependency>
             <groupId>org.apache.jclouds</groupId>
             <artifactId>jclouds-resources</artifactId>
-            <version>1.9.0</version>
+            <version>1.9.2</version>
             <scope>compile</scope>
           </dependency>
         </dependencies>
@@ -198,7 +198,7 @@
           <dependency>
             <groupId>org.apache.jclouds</groupId>
             <artifactId>jclouds-resources</artifactId>
-            <version>1.9.0</version>
+            <version>1.9.2</version>
             <scope>compile</scope>
           </dependency>
         </dependencies>
