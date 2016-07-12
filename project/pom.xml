@@ -25,9 +25,9 @@
     <version>14</version>
     <relativePath />
   </parent>
-  <groupId>org.apache.jclouds</groupId>
+  <groupId>io.cloudsoft.jclouds</groupId>
   <artifactId>jclouds-project</artifactId>
-  <version>1.9.3-SNAPSHOT</version>
+  <version>1.9.2-alpha.20160712</version>
   <packaging>pom</packaging>
   <name>Apache jclouds Project</name>
   <url>http://jclouds.apache.org/</url>
@@ -82,7 +82,7 @@
     <connection>scm:git:https://git-wip-us.apache.org/repos/asf/jclouds.git</connection>
     <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/jclouds.git</developerConnection>
     <url>https://git-wip-us.apache.org/repos/asf?p=jclouds.git</url>
-    <tag>HEAD</tag>
+    <tag>rel/jclouds-1.9.2-alpha.20160712</tag>
   </scm>
 
   <repositories>
@@ -518,17 +518,17 @@
               <!-- CloudSigma bundles conflict between api and providers-->
               <conflictingDependencies>
                 <dependency>
-                  <groupId>org.apache.jclouds.api</groupId>
+                  <groupId>io.cloudsoft.jclouds.api</groupId>
                   <artifactId>cloudsigma</artifactId>
                   <version>${project.version}</version>
                 </dependency>
                 <dependency>
-                  <groupId>org.apache.jclouds.provider</groupId>
+                  <groupId>io.cloudsoft.jclouds.provider</groupId>
                   <artifactId>cloudsigma-lvs</artifactId>
                   <version>${project.version}</version>
                 </dependency>
                 <dependency>
-                  <groupId>org.apache.jclouds.provider</groupId>
+                  <groupId>io.cloudsoft.jclouds.provider</groupId>
                   <artifactId>cloudsigma-zrh</artifactId>
                   <version>${project.version}</version>
                 </dependency>
@@ -1086,7 +1086,7 @@
             </executions>
             <dependencies>
               <dependency>
-                <groupId>org.apache.jclouds</groupId>
+                <groupId>io.cloudsoft.jclouds</groupId>
                 <artifactId>jclouds-assemblies</artifactId>
                 <version>${project.version}</version>
               </dependency>
@@ -1184,7 +1184,7 @@
             <artifactId>maven-checkstyle-plugin</artifactId>
             <dependencies>
               <dependency>
-                <groupId>org.apache.jclouds</groupId>
+                <groupId>io.cloudsoft.jclouds</groupId>
                 <artifactId>jclouds-resources</artifactId>
                 <version>${project.version}</version>
               </dependency>
@@ -1203,7 +1203,7 @@
             <artifactId>modernizer-maven-plugin</artifactId>
             <dependencies>
               <dependency>
-                <groupId>org.apache.jclouds</groupId>
+                <groupId>io.cloudsoft.jclouds</groupId>
                 <artifactId>jclouds-resources</artifactId>
                 <version>${project.version}</version>
               </dependency>

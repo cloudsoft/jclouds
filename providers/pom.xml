@@ -21,11 +21,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>jclouds-project</artifactId>
-    <groupId>org.apache.jclouds</groupId>
-    <version>1.9.3-SNAPSHOT</version>
+    <groupId>io.cloudsoft.jclouds</groupId>
+    <version>1.9.2-alpha.20160712</version>
     <relativePath>../project/pom.xml</relativePath>
   </parent>
-  <groupId>org.apache.jclouds.provider</groupId>
+  <groupId>io.cloudsoft.jclouds.provider</groupId>
   <artifactId>jclouds-providers-project</artifactId>
   <packaging>pom</packaging>
   <name>jclouds providers project</name>
