@@ -20,12 +20,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.apache.jclouds</groupId>
+    <groupId>io.cloudsoft.jclouds</groupId>
     <artifactId>jclouds-project</artifactId>
-    <version>1.9.3-SNAPSHOT</version>
+    <version>1.9.3-cloudsoft.20160725</version>
     <relativePath>../../project/pom.xml</relativePath>
   </parent>
-  <groupId>org.apache.jclouds.api</groupId>
+  <groupId>io.cloudsoft.jclouds.api</groupId>
   <artifactId>openstack-nova</artifactId>
   <name>Apache jclouds :: OpenStack :: Nova API</name>
   <description>jclouds components to access an implementation of OpenStack Nova</description>
@@ -44,12 +44,12 @@
     <test.jclouds.keystone.credential-type>passwordCredentials</test.jclouds.keystone.credential-type>
 
     <jclouds.osgi.export>org.jclouds.openstack.nova.v2_0*;version="${project.version}"</jclouds.osgi.export>
-    <jclouds.osgi.import>org.jclouds*;version="${project.version}",*</jclouds.osgi.import>
+    <jclouds.osgi.import>org.jclouds*,*</jclouds.osgi.import>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.jclouds.api</groupId>
+      <groupId>io.cloudsoft.jclouds.api</groupId>
       <artifactId>openstack-keystone</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -59,45 +59,45 @@
       <artifactId>guice-multibindings</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds</groupId>
+      <groupId>io.cloudsoft.jclouds</groupId>
       <artifactId>jclouds-compute</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds</groupId>
+      <groupId>io.cloudsoft.jclouds</groupId>
       <artifactId>jclouds-core</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds.api</groupId>
+      <groupId>io.cloudsoft.jclouds.api</groupId>
       <artifactId>openstack-keystone</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds.api</groupId>
+      <groupId>io.cloudsoft.jclouds.api</groupId>
       <artifactId>openstack-cinder</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds</groupId>
+      <groupId>io.cloudsoft.jclouds</groupId>
       <artifactId>jclouds-compute</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds.driver</groupId>
+      <groupId>io.cloudsoft.jclouds.driver</groupId>
       <artifactId>jclouds-sshj</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds.driver</groupId>
+      <groupId>io.cloudsoft.jclouds.driver</groupId>
       <artifactId>jclouds-slf4j</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
@@ -162,9 +162,9 @@
         </executions>
         <dependencies>
           <dependency>
-            <groupId>org.apache.jclouds</groupId>
+            <groupId>io.cloudsoft.jclouds</groupId>
             <artifactId>jclouds-resources</artifactId>
-            <version>1.9.0</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
           </dependency>
         </dependencies>
@@ -195,9 +195,9 @@
         </executions>
         <dependencies>
           <dependency>
-            <groupId>org.apache.jclouds</groupId>
+            <groupId>io.cloudsoft.jclouds</groupId>
             <artifactId>jclouds-resources</artifactId>
-            <version>1.9.0</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
           </dependency>
         </dependencies>
