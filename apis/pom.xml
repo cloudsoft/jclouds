@@ -22,7 +22,7 @@
   <parent>
     <artifactId>jclouds-project</artifactId>
     <groupId>io.cloudsoft.jclouds</groupId>
-    <version>1.9.3-cloudsoft.20160725</version>
+    <version>1.9.3-cloudsoft.20160825</version>
     <relativePath>../project/pom.xml</relativePath>
   </parent>
   <groupId>io.cloudsoft.jclouds.api</groupId>

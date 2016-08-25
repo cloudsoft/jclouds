@@ -27,7 +27,7 @@
   </parent>
   <groupId>io.cloudsoft.jclouds</groupId>
   <artifactId>jclouds-project</artifactId>
-  <version>1.9.3-cloudsoft.20160725</version>
+  <version>1.9.3-cloudsoft.20160825</version>
   <packaging>pom</packaging>
   <name>Apache jclouds Project</name>
   <url>http://jclouds.apache.org/</url>
