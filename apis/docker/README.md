@@ -50,6 +50,19 @@ export DOCKER_HOST="http://localhost:2375/"
 mvn -Plive integration-test
 ```
 
+Notice, if you are using [Docker for Mac](https://docs.docker.com/engine/installation/mac/) you may find useful the following approach:
+
+```
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock -p 127.0.0.1:1234:1234 bobrik/socat TCP-LISTEN:1234,fork UNIX-CONNECT:/var/run/docker.sock
+```
+
+and then 
+
+```
+export DOCKER_HOST=http://localhost:1234
+mvn -Plive integration-test
+```
+
 # How it works
 
 
