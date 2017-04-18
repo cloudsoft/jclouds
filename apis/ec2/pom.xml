@@ -25,9 +25,10 @@
     <version>2.0.0</version>
     <relativePath>../../project/pom.xml</relativePath>
   </parent>
-  <groupId>org.apache.jclouds.api</groupId>
+  <groupId>io.cloudsoft.jclouds.api</groupId>
   <artifactId>ec2</artifactId>
-  <name>jclouds ec2 api</name>
+  <version>2.0.0.2-20170418.1323</version>
+  <name>Cloudsoft :: jclouds ec2 api</name>
   <description>jclouds components to access an implementation of EC2</description>
   <packaging>bundle</packaging>
 
@@ -44,46 +45,46 @@
     <!-- Windows_Server-2008-R2 with WinRM enabled (setup instructions at http://www.frontiertown.co.uk/2011/12/overthere-control-windows-from-java/) -->
     <test.ec2.windows-template>hardwareId=m1.small,imageId=us-east-1/ami-0cb76d65</test.ec2.windows-template>
     <jclouds.osgi.export>org.jclouds.ec2*;version="${project.version}"</jclouds.osgi.export>
-    <jclouds.osgi.import>org.jclouds*;version="${project.version}",*</jclouds.osgi.import>
+    <jclouds.osgi.import>org.jclouds*;version="${project.parent.version}",*</jclouds.osgi.import>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.jclouds.api</groupId>
       <artifactId>sts</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds</groupId>
       <artifactId>jclouds-compute</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds</groupId>
       <artifactId>jclouds-core</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds</groupId>
       <artifactId>jclouds-compute</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds.driver</groupId>
       <artifactId>jclouds-log4j</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds.driver</groupId>
       <artifactId>jclouds-sshj</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -110,6 +111,27 @@
       <plugin>
         <groupId>com.theoryinpractise</groupId>
         <artifactId>clojure-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.jclouds</groupId>
+            <artifactId>jclouds-resources</artifactId>
+            <version>${project.parent.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.gaul</groupId>
+        <artifactId>modernizer-maven-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.jclouds</groupId>
+            <artifactId>jclouds-resources</artifactId>
+            <version>${project.parent.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
