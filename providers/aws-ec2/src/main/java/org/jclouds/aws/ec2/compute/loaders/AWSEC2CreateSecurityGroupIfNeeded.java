@@ -39,9 +39,9 @@ import org.jclouds.net.domain.IpPermission;
 import org.jclouds.net.domain.IpProtocol;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheLoader;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 
@@ -104,14 +104,17 @@ public class AWSEC2CreateSecurityGroupIfNeeded extends CacheLoader<RegionAndName
                                .build());
             }
 
-            Optional<SecurityGroup> securityGroupOptional = Iterables.tryFind(securityApi.describeSecurityGroupsInRegion(region), new Predicate<SecurityGroup>() {
-               @Override
-               public boolean apply(SecurityGroup input) {
-                  return name.equalsIgnoreCase(input.getName());
-               }
-            });
-            if (!securityGroupOptional.isPresent()) throw new IllegalStateException();
-            String myOwnerId = securityGroupOptional.get().getOwnerId();
+            // Use filter (as per `SecurityGroupPresent`, in securityGroupEventualConsistencyDelay)
+            Set<SecurityGroup> securityGroups = securityApi.describeSecurityGroupsInRegionWithFilter(region,
+                  ImmutableMultimap.of("group-name", name));
+            if (securityGroups.isEmpty()) {
+               throw new IllegalStateException(String.format("security group %s/%s not found after creating", region, name));
+            } else if (securityGroups.size() > 1) {
+               throw new IllegalStateException(String.format("multiple security groups matching %s/%s found after creating: %s", 
+                     region, name, securityGroups));
+            }
+            SecurityGroup securityGroup = Iterables.getOnlyElement(securityGroups);
+            String myOwnerId = securityGroup.getOwnerId();
             permissions.add(IpPermission.builder()
                             .fromPort(0)
                             .toPort(65535)

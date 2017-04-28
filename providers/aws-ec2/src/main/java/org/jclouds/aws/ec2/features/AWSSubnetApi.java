@@ -83,7 +83,7 @@ public interface AWSSubnetApi extends SubnetApi {
     * @param region       Subnet are Region-specific.
     * @param subnetIds    Subnet to describe.
     * @see <a href="http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSubnets.html"
-    * />
+    * >doc</a>
     */
    @Named("DescribeSubnets")
    @POST
@@ -96,14 +96,14 @@ public interface AWSSubnetApi extends SubnetApi {
            @BinderParam(BindSubnetIdsToIndexedFormParams.class) String... subnetIds);
 
    /**
-    * Returns information about key pairs available to you. If you specify filters,
-    * information about keypairs matching those filters is returned. Otherwise, all
-    * keypairs you have access to are returned.
+    * Returns information about subnets available to you. If you specify filters,
+    * information about subnets matching those filters is returned. Otherwise, all
+    * subnets you have access to are returned.
     *
     * @param region Subnets are Region-specific.
     * @param filter Multimap of filter key/values.
     * @see <a href="http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSubnets.html"
-    * />
+    * >doc</a>
     */
    @Named("DescribeSubnets")
    @POST
@@ -111,7 +111,7 @@ public interface AWSSubnetApi extends SubnetApi {
    @FormParams(keys = ACTION, values = "DescribeSubnets")
    @XMLResponseParser(DescribeSubnetsResponseHandler.class)
    @Fallback(Fallbacks.EmptyFluentIterableOnNotFoundOr404.class)
-   FluentIterable<Subnet> describeSubentsInRegionWithFilter(
+   FluentIterable<Subnet> describeSubnetsInRegionWithFilter(
            @EndpointParam(parser = RegionToEndpointOrProviderIfNull.class) @Nullable String region,
            @BinderParam(BindFiltersToIndexedFormParams.class) Multimap<String, String> filter);
 }

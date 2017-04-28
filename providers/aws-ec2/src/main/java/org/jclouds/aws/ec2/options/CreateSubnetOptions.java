@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import org.jclouds.ec2.options.internal.BaseEC2RequestOptions;
 
 /**
- * Contains options supported in the Form API for the CreateSubent
+ * Contains options supported in the Form API for the CreateSubnet
  * operation. <h2>
  * Usage</h2> The recommended way to instantiate a CreateSubnetOptions
  * object is to statically import CreateSubnetOptions.Builder.* and
