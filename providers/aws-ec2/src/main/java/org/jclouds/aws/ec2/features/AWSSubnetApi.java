@@ -78,6 +78,22 @@ public interface AWSSubnetApi extends SubnetApi {
            CreateSubnetOptions... options);
 
    /**
+    * Deletes a subnet.
+    *
+    * @param region
+    * @param subnetId
+    * @see <a href="http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteSubnet.html"
+    * >doc</a>
+    */
+   @Named("DeleteSubnet")
+   @POST
+   @Path("/")
+   @FormParams(keys = ACTION, values = "DeleteSubnet")
+   void deleteSubnetInRegion(
+         @EndpointParam(parser = RegionToEndpointOrProviderIfNull.class) @Nullable String region,
+           @FormParam("SubnetId") String subnetId);
+
+   /**
     * Describes one or more of your subnets.
     *
     * @param region       Subnet are Region-specific.

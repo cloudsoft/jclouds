@@ -227,7 +227,7 @@ public class EC2ComputeService extends BaseComputeService {
       Set<SecurityGroup> securityGroupsToDelete = client.getSecurityGroupApi().get()
               .describeSecurityGroupsInRegionWithFilter(region, securityGroupFilterByName);
       if (securityGroupsToDelete.size() > 1) {
-         logger.warn("When trying to delete security group {} found more than one matching the name. Will delete all - {}.",
+         logger.warn("When trying to delete security group %s found more than one matching the name. Will delete all - %s.",
                  group, securityGroupsToDelete);
       }
       for (SecurityGroup securityGroup : securityGroupsToDelete) {

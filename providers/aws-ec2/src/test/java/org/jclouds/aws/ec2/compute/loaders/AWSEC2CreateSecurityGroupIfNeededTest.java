@@ -38,7 +38,6 @@ import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 
 @Test(groups = "unit", singleThreaded = true, testName = "AWSEC2CreateSecurityGroupIfNeeded")
@@ -83,7 +82,7 @@ public class AWSEC2CreateSecurityGroupIfNeededTest {
                   new CreateSecurityGroupOptions().vpcId("vpc"))).andReturn("sg-123456");
       expect(group.getOwnerId()).andReturn("ownerId");
       client.authorizeSecurityGroupIngressInRegion("region", "sg-123456", permissions.build());
-      expect(client.describeSecurityGroupsInRegionWithFilter("region", ImmutableMultimap.of("group-name", "group")))
+      expect(client.describeSecurityGroupsInRegionById("region", "sg-123456"))
                .andReturn(Set.class.cast(groups));
 
 

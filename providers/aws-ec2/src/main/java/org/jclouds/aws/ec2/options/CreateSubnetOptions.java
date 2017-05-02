@@ -31,7 +31,9 @@ import org.jclouds.ec2.options.internal.BaseEC2RequestOptions;
  * import static org.jclouds.aws.ec2.options.CreateSubnetOptions.Builder.*
  * <p/>
  * AWSEC2Api connection = // get connection
- * group = connection.getAWSSubnetApi().createSubnet(vpcId("123125").noReboot());
+ * String vpcId = "vpc-1a2b3c4d";
+ * String cidrBlock = "10.0.1.0/24";
+ * group = connection.getAWSSubnetApi().createSubnetInRegion(vpcId, cirdBlock, availabilityZone("us-east-1a"));
  * <code>
  * 
  * @see <a href=

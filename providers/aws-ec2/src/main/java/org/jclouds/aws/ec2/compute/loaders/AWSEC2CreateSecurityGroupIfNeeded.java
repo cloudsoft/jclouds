@@ -41,7 +41,6 @@ import org.jclouds.net.domain.IpProtocol;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheLoader;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 
@@ -105,8 +104,7 @@ public class AWSEC2CreateSecurityGroupIfNeeded extends CacheLoader<RegionAndName
             }
 
             // Use filter (as per `SecurityGroupPresent`, in securityGroupEventualConsistencyDelay)
-            Set<SecurityGroup> securityGroups = securityApi.describeSecurityGroupsInRegionWithFilter(region,
-                  ImmutableMultimap.of("group-name", name));
+            Set<SecurityGroup> securityGroups = securityApi.describeSecurityGroupsInRegionById(region, id);
             if (securityGroups.isEmpty()) {
                throw new IllegalStateException(String.format("security group %s/%s not found after creating", region, name));
             } else if (securityGroups.size() > 1) {

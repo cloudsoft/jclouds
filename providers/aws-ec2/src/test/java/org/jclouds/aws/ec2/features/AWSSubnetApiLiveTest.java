@@ -16,17 +16,25 @@
  */
 package org.jclouds.aws.ec2.features;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import org.jclouds.aws.ec2.AWSEC2Api;
+import org.jclouds.aws.ec2.domain.VPC;
+import org.jclouds.aws.ec2.options.CreateVpcOptions;
 import org.jclouds.compute.internal.BaseComputeServiceContextLiveTest;
 import org.jclouds.ec2.domain.Subnet;
-import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Iterables;
 
 /**
  * Tests behavior of {@code VPCApi}
@@ -34,49 +42,89 @@ import com.google.common.collect.FluentIterable;
 @Test(groups = "live", singleThreaded = true)
 public class AWSSubnetApiLiveTest extends BaseComputeServiceContextLiveTest {
 
-   public AWSSubnetApiLiveTest() {
-      provider = "aws-ec2";
-   }
+   private String region;
 
    private AWSEC2Api api;
+   private AWSSubnetApi subnetClient;
+   private VPCApi vpcClient;
+
    private Subnet subnet;
+   private VPC vpc;
+
+   public AWSSubnetApiLiveTest() {
+      provider = "aws-ec2";
+      region = "us-west-2";
+   }
 
    @Override
    @BeforeClass(groups = { "integration", "live" })
    public void setupContext() {
       super.setupContext();
       api = view.unwrapApi(AWSEC2Api.class);
+      subnetClient = api.getAWSSubnetApi().get();
+      vpcClient = view.unwrapApi(AWSEC2Api.class).getVPCApi().get();
+   }
+
+   @Override
+   @AfterClass(groups = { "integration", "live" })
+   public void tearDownContext() {
+      try {
+         try {
+            if (subnet != null) {
+               subnetClient.deleteSubnetInRegion(region, subnet.getSubnetId());
+            }
+         } finally {
+            if (vpc != null) {
+               vpcClient.deleteVpc(region, vpc.id());
+            }
+         }
+      } finally {
+         super.tearDownContext();
+      }
    }
 
    @Test
    public void testCreateSubnetInRegion() {
-//      subnet = subnetApi().createSubnetInRegion();
-//      assertNotNull(subnet);
+      vpc = vpcClient.createVpc(region, "10.0.0.0/16", CreateVpcOptions.NONE);
+      subnet = subnetClient.createSubnetInRegion(region, vpc.id(), "10.0.0.0/20");
+      assertNotNull(subnet);
+      assertEquals(subnet.getCidrBlock(), "10.0.0.0/20");
    }
 
    @Test(dependsOnMethods = "testCreateSubnetInRegion")
    public void testGet() {
-      FluentIterable<Subnet> subnets = subnetApi().list();
-      assertTrue(subnets.toList().size() == 1);
+      FluentIterable<Subnet> subnets = subnetClient.describeSubnetsInRegion(region, subnet.getSubnetId());
+      Subnet subnetFound = Iterables.getOnlyElement(subnets);
+      assertEquals(subnetFound.getSubnetId(), subnet.getSubnetId());
+   }
+
+   @Test(dependsOnMethods = "testCreateSubnetInRegion")
+   public void testFilter() {
+      FluentIterable<Subnet> subnets = subnetClient.describeSubnetsInRegionWithFilter(region, 
+            ImmutableMultimap.of("subnet-id", subnet.getSubnetId()));
+      Subnet subnetFound = Iterables.getOnlyElement(subnets);
+      assertEquals(subnetFound.getSubnetId(), subnet.getSubnetId());
    }
 
    @Test(dependsOnMethods = "testCreateSubnetInRegion")
    public void testList() {
-      FluentIterable<Subnet> subnets = subnetApi().list();
-      assertTrue(subnets.toList().size() == 1);
+      FluentIterable<Subnet> subnets = subnetClient.describeSubnetsInRegionWithFilter(region, 
+            ImmutableMultimap.<String, String>of());
+      Optional<Subnet> subnetFound = Iterables.tryFind(subnets, new Predicate<Subnet>() {
+         @Override
+         public boolean apply(Subnet input) {
+            return input != null && input.getSubnetId().equals(subnet.getSubnetId());
+         }
+      });
+      assertTrue(subnetFound.isPresent(), "subnets=" + ImmutableList.copyOf(subnets));
    }
 
-   @Test(dependsOnMethods = {"testList", "testGet"}, alwaysRun = true)
+   @Test(dependsOnMethods = {"testGet", "testFilter", "testList"}, alwaysRun = true)
    public void testDelete() {
       if (subnet != null) {
-//         assertTrue(subnetApi().deleteSubnet(null, vpc.id()));
+         String subnetId = subnet.getSubnetId();
+         subnet = null;
+         subnetClient.deleteSubnetInRegion(region, subnetId);
       }
    }
-
-   private AWSSubnetApi subnetApi() {
-      Optional<? extends AWSSubnetApi> subnetOption = api.getAWSSubnetApi();
-      if (!subnetOption.isPresent()) Assert.fail();
-      return subnetOption.get();
-   }
-
 }
