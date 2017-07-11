@@ -50,7 +50,7 @@ public class CredentialStoreModule extends AbstractModule {
    }
 
    public CredentialStoreModule() {
-      this(null);
+      this(new ConcurrentHashMap<String, ByteSource>());
    }
 
    @Override
@@ -59,13 +59,8 @@ public class CredentialStoreModule extends AbstractModule {
       }).to(CredentialsToJsonByteSource.class);
       bind(new TypeLiteral<Function<ByteSource, Credentials>>() {
       }).to(CredentialsFromJsonByteSource.class);
-      if (backing != null) {
-         bind(new TypeLiteral<Map<String, ByteSource>>() {
-         }).toInstance(backing);
-      } else {
-         bind(new TypeLiteral<Map<String, ByteSource>>() {
-         }).toInstance(BACKING);
-      }
+      bind(new TypeLiteral<Map<String, ByteSource>>() {
+      }).toInstance(backing);
    }
 
    public static class CredentialsToJsonByteSource implements Function<Credentials, ByteSource> {
