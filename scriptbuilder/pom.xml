@@ -25,8 +25,10 @@
     <version>2.0.2</version>
     <relativePath>../project/pom.xml</relativePath>
   </parent>
+  <groupId>io.cloudsoft.jclouds</groupId>
   <artifactId>jclouds-scriptbuilder</artifactId>
-  <name>jclouds script builder</name>
+  <version>2.0.2.1-20170711.1100</version>
+  <name>Cloudsoft :: jclouds script builder</name>
   <description>creates scripts that can be used to manage services</description>
   <packaging>bundle</packaging>
 
@@ -43,18 +45,18 @@
     -->
     <jclouds.osgi.import>
         javax.inject*;resolution:=optional,
-        org.jclouds.domain*;version="${project.version}";resolution:=optional,
-        org.jclouds.javax.annotation*;version="${project.version}";resolution:=optional,
-        org.jclouds*;version="${project.version}",
+        org.jclouds.domain*;version="${project.parent.version}";resolution:=optional,
+        org.jclouds.javax.annotation*;version="${project.parent.version}";resolution:=optional,
+        org.jclouds*;version="${project.parent.version}",
         *
     </jclouds.osgi.import>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${project.parent.groupId}</groupId>
       <artifactId>jclouds-core</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
@@ -63,4 +65,29 @@
     </dependency>
   </dependencies>
 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.jclouds</groupId>
+            <artifactId>jclouds-resources</artifactId>
+            <version>${project.parent.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.gaul</groupId>
+        <artifactId>modernizer-maven-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.jclouds</groupId>
+            <artifactId>jclouds-resources</artifactId>
+            <version>${project.parent.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
 </project>
