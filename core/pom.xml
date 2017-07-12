@@ -25,8 +25,10 @@
     <version>2.0.2</version>
     <relativePath>../project/pom.xml</relativePath>
   </parent>
+  <groupId>io.cloudsoft.jclouds</groupId>
   <artifactId>jclouds-core</artifactId>
-  <name>jclouds Components Core</name>
+  <version>2.0.2.1-20170712.0951</version>
+  <name>Cloudsoft :: jclouds Components Core</name>
   <packaging>bundle</packaging>
   <description>Core components to access jclouds services</description>
 
@@ -133,6 +135,28 @@
             <exclude>org/jclouds/providers/ProvidersTest.class</exclude>
           </excludes>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.jclouds</groupId>
+            <artifactId>jclouds-resources</artifactId>
+            <version>${project.parent.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.gaul</groupId>
+        <artifactId>modernizer-maven-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.jclouds</groupId>
+            <artifactId>jclouds-resources</artifactId>
+            <version>${project.parent.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
