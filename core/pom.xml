@@ -27,7 +27,7 @@
   </parent>
   <groupId>io.cloudsoft.jclouds</groupId>
   <artifactId>jclouds-core</artifactId>
-  <version>2.0.2.1-20170712.0951</version>
+  <version>2.0.2.2-20170712.1657</version>
   <name>Cloudsoft :: jclouds Components Core</name>
   <packaging>bundle</packaging>
   <description>Core components to access jclouds services</description>
@@ -41,7 +41,7 @@
 
   <properties>
     <jclouds.osgi.import>*</jclouds.osgi.import>
-    <jclouds.osgi.export>org.jclouds*;version=${project.version};-noimport:=true</jclouds.osgi.export>
+    <jclouds.osgi.export>org.jclouds*;version=2.0.2.2.20170712.1657;-noimport:=true</jclouds.osgi.export>
     <jclouds.osgi.activator>org.jclouds.osgi.Activator</jclouds.osgi.activator>
   </properties>
 
