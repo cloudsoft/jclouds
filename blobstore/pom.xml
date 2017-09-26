@@ -37,38 +37,39 @@
     <tag>rel/jclouds-2.0.2-rc1</tag>
   </scm>
 
-  <properties>
-    <jclouds.osgi.import>
-      org.jclouds;version="${project.version}",
-      *
-    </jclouds.osgi.import>
-    <jclouds.osgi.export>org.jclouds.blobstore*;version="${project.version}";-noimport:=true</jclouds.osgi.export>
-  </properties>
+    <properties>
+        <jclouds.osgi.import>
+            org.jclouds;version="${project.version}",
+            *
+        </jclouds.osgi.import>
+        <jclouds.osgi.export>org.jclouds.blobstore*;version="${project.version}";-noimport:=true</jclouds.osgi.export>
+    </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>jclouds-core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>jclouds-core</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.auto.value</groupId>
-      <artifactId>auto-value</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.google.auto.service</groupId>
-      <artifactId>auto-service</artifactId>
-      <optional>true</optional>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jclouds-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jclouds-core</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.value</groupId>
+            <artifactId>auto-value</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
 
   <build>
     <plugins>
@@ -110,4 +111,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>
