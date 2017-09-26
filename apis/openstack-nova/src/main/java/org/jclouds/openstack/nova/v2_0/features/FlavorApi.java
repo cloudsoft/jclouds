@@ -53,6 +53,7 @@ import org.jclouds.rest.annotations.WrapWith;
  *
  */
 @RequestFilters(AuthenticateRequest.class)
+// @RequestFilters(KeystoneAuthenticationFilter.class)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/flavors")
 public interface FlavorApi {
@@ -112,7 +113,8 @@ public interface FlavorApi {
    /**
     * Create flavor according to the provided object
     *
-    * @param flavor - flavor object
+    * @param flavor
+    *           - flavor object
     * @return newly created flavor
     */
    @Named("flavor:create")
@@ -124,7 +126,8 @@ public interface FlavorApi {
    /**
     * Delete flavor with a given id
     *
-    * @param id - flavor id
+    * @param id
+    *           - flavor id
     */
    @Named("flavor:delete")
    @DELETE
