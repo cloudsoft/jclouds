@@ -46,7 +46,7 @@
     <module>allloadbalancer</module>
     <module>all</module>
   </modules>
-  
+
   <profiles>
     <profile>
       <id>distribution</id>
@@ -71,7 +71,7 @@
                   </descriptors>
                 </configuration>
               </execution>
-            </executions>                               
+            </executions>
           </plugin>
         </plugins>
       </build>
