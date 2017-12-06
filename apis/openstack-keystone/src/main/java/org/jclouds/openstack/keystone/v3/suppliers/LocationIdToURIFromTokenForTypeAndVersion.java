@@ -25,7 +25,6 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Resource;
 
-import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.logging.Logger;
 import org.jclouds.openstack.keystone.v2_0.domain.Service;
 import org.jclouds.openstack.keystone.v3.domain.Catalog;
@@ -62,7 +61,7 @@ public class LocationIdToURIFromTokenForTypeAndVersion implements Supplier<Map<S
        *            if the {@code apiType} is not present in the catalog
        */
       LocationIdToURIFromTokenForTypeAndVersion createForApiTypeAndVersion(@Assisted("apiType") String apiType,
-            @Nullable @Assisted("apiVersion") String apiVersion) throws NoSuchElementException;
+            @Assisted("apiVersion") String apiVersion) throws NoSuchElementException;
    }
 
    @Resource
@@ -77,7 +76,7 @@ public class LocationIdToURIFromTokenForTypeAndVersion implements Supplier<Map<S
    @Inject
    public LocationIdToURIFromTokenForTypeAndVersion(Supplier<Token> tokenSupplier,
          EndpointToSupplierURI endpointToSupplierURI, Function<Endpoint, String> endpointToLocationId,
-         @Assisted("apiType") String apiType, @Nullable @Assisted("apiVersion") String apiVersion) {
+         @Assisted("apiType") String apiType, @Assisted("apiVersion") String apiVersion) {
       this.tokenSupplier = tokenSupplier;
       this.endpointToSupplierURI = endpointToSupplierURI;
       this.endpointToLocationId = endpointToLocationId;
@@ -90,13 +89,12 @@ public class LocationIdToURIFromTokenForTypeAndVersion implements Supplier<Map<S
       Multimap<String, Endpoint> locationToEndpoints = FluentIterable.from(tokenSupplier.get().catalog())
             .filter(new Predicate<Catalog>() {
                @Override
-               public boolean apply(@javax.annotation.Nullable Catalog input) {
+               public boolean apply(Catalog input) {
                   return input.type().equals(apiType);
                }
             }).transformAndConcat(new Function<Catalog, Iterable<Endpoint>>() {
-               @javax.annotation.Nullable
                @Override
-               public Iterable<Endpoint> apply(@javax.annotation.Nullable Catalog input) {
+               public Iterable<Endpoint> apply(Catalog input) {
                   return input.endpoints();
                }
             }).index(endpointToLocationId);
@@ -131,7 +129,7 @@ public class LocationIdToURIFromTokenForTypeAndVersion implements Supplier<Map<S
             default:
                Optional<Endpoint> endpointOptional = Iterables.tryFind(endpoints, new Predicate<Endpoint>() {
                   @Override
-                  public boolean apply(@Nullable Endpoint endpoint) {
+                  public boolean apply(Endpoint endpoint) {
                      InetAddress address = null;
                      try {
                         address = InetAddress.getByName(endpoint.url().getHost());
