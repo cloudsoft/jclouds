@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jclouds.openstack.keystone.v2_0.domain;
+package org.jclouds.openstack.keystone.v3.domain;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
