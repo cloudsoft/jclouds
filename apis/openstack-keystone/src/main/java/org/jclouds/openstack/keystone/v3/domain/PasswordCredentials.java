@@ -22,8 +22,6 @@ import java.beans.ConstructorProperties;
 
 import org.jclouds.openstack.keystone.v2_0.config.CredentialType;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.MoreObjects.ToStringHelper;
 import com.google.common.base.Objects;
 
 /**
@@ -126,8 +124,8 @@ public class PasswordCredentials {
             && Objects.equal(this.password, that.password);
    }
 
-   protected ToStringHelper string() {
-      return MoreObjects.toStringHelper(this)
+   protected Objects.ToStringHelper string() {
+      return Objects.toStringHelper(this)
             .add("username", username)
             .add("password", password == null ? null : "*****");
    }
