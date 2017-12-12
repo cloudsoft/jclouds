@@ -25,10 +25,11 @@
     <version>2.0.2</version>
     <relativePath>../../project/pom.xml</relativePath>
   </parent>
-  <groupId>org.apache.jclouds.api</groupId>
+  <groupId>io.cloudsoft.jclouds.api</groupId>
   <artifactId>openstack-keystone</artifactId>
+  <version>2.0.2.5-20171212.1154</version>
   <name>jclouds openstack-keystone api</name>
-  <description>jclouds components to access an implementation of OpenStack Keystone</description>
+  <description>Cloudsoft :: jclouds components to access an implementation of OpenStack Keystone</description>
   <packaging>bundle</packaging>
 
   <properties>
@@ -41,15 +42,15 @@
     <test.openstack-keystone.credential>FIXME_CREDENTIALS</test.openstack-keystone.credential>
     <test.jclouds.keystone.credential-type>passwordCredentials</test.jclouds.keystone.credential-type>
 
-    <jclouds.osgi.export>org.jclouds.openstack*;version="${project.version}"</jclouds.osgi.export>
-    <jclouds.osgi.import>org.jclouds*;version="${project.version}",*</jclouds.osgi.import>
+    <jclouds.osgi.export>org.jclouds.openstack*;version="2.0.2.5.20171212.1154"</jclouds.osgi.export>
+    <jclouds.osgi.import>org.jclouds*;version="${project.parent.version}",*</jclouds.osgi.import>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.jclouds</groupId>
       <artifactId>jclouds-core</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.auto.value</groupId>
@@ -64,14 +65,14 @@
     <dependency>
       <groupId>org.apache.jclouds</groupId>
       <artifactId>jclouds-core</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds.driver</groupId>
       <artifactId>jclouds-slf4j</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -90,6 +91,32 @@
       <optional>true</optional>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.jclouds</groupId>
+            <artifactId>jclouds-resources</artifactId>
+            <version>${project.parent.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.gaul</groupId>
+        <artifactId>modernizer-maven-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.jclouds</groupId>
+            <artifactId>jclouds-resources</artifactId>
+            <version>${project.parent.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
 
   <profiles>
     <profile>
