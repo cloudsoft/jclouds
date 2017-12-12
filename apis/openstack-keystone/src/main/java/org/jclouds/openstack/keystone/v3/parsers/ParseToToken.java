@@ -16,10 +16,9 @@
  */
 package org.jclouds.openstack.keystone.v3.parsers;
 
-import javax.annotation.Nullable;
-
 import org.jclouds.http.HttpResponse;
 import org.jclouds.http.functions.ParseFirstJsonValueNamed;
+import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.internal.GsonWrapper;
 import org.jclouds.openstack.keystone.v3.domain.Token;
 
@@ -44,7 +43,6 @@ public class ParseToToken implements Function<HttpResponse, Token> {
       ParseFirstJsonValueNamed transformer = new ParseFirstJsonValueNamed(injector.getInstance(GsonWrapper.class),
               TypeLiteral.get(Token.class), "token");
       Token token = (Token) transformer.apply(from);
-//      return Token.create(ImmutableList.<String>of(), null, null, ImmutableList.<String>of(), User.create("", "", null, User.Domain.create("", "")), null);
       String xSubjectToken = Iterables.getOnlyElement(from.getHeaders().get("X-Subject-Token"));
       return token.toBuilder().id(xSubjectToken).build();
    }

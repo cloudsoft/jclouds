@@ -90,13 +90,13 @@ public class LocationIdToURIFromTokenForTypeAndVersion implements Supplier<Map<S
       Multimap<String, Endpoint> locationToEndpoints = FluentIterable.from(tokenSupplier.get().catalog())
             .filter(new Predicate<Catalog>() {
                @Override
-               public boolean apply(@javax.annotation.Nullable Catalog input) {
+               public boolean apply(@Nullable Catalog input) {
                   return input.type().equals(apiType);
                }
             }).transformAndConcat(new Function<Catalog, Iterable<Endpoint>>() {
-               @javax.annotation.Nullable
+               @Nullable
                @Override
-               public Iterable<Endpoint> apply(@javax.annotation.Nullable Catalog input) {
+               public Iterable<Endpoint> apply(@Nullable Catalog input) {
                   return input.endpoints();
                }
             }).index(endpointToLocationId);
