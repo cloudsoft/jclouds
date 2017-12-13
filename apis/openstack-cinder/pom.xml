@@ -27,7 +27,7 @@
   </parent>
   <groupId>io.cloudsoft.jclouds.api</groupId>
   <artifactId>openstack-cinder</artifactId>
-  <version>2.0.2.5-20171212.1727</version>
+  <version>2.0.2.6-20171213.0951</version>
   <name>Cloudsoft :: jclouds openstack-cinder api</name>
   <description>jclouds components to access an implementation of OpenStack Cinder</description>
   <packaging>bundle</packaging>
@@ -42,7 +42,7 @@
     <test.openstack-cinder.credential>FIXME_CREDENTIALS</test.openstack-cinder.credential>
     <test.jclouds.keystone.credential-type>passwordCredentials</test.jclouds.keystone.credential-type>
 
-    <jclouds.osgi.export>org.jclouds.openstack.cinder.v1*;version="2.0.2.5-20171212.1727"</jclouds.osgi.export>
+    <jclouds.osgi.export>org.jclouds.openstack.cinder.v1*;version="2.0.2.6.20171213.0951"</jclouds.osgi.export>
     <jclouds.osgi.import>org.jclouds*;version="${project.parent.version}",*</jclouds.osgi.import>
   </properties>
 
